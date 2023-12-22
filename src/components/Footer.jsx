@@ -23,7 +23,7 @@ function Footer() {
         <div className='border-b-2 my-4 w-au'></div>
         <div className="flex flex-col">
           <input
-            className="border-2 border-white py-3 px-4 w-full mb-2"
+            className="border border-white py-3 px-4 w-full mb-2"
             placeholder="Send us an email"
             name="send"
             type="text"
@@ -41,7 +41,7 @@ function Footer() {
           I accept Google's Terms and Conditions and acknowledge that my information will be used in accordance with Google's Privacy Policy.
         </div>
         <div className='border-b-2 my-4 w-au'></div>
-        <div className='Footer1 flex flex-row mb-2'>
+        <div className='Footer1 flex flex-row pb-7'>
           <div className='font-bold mr-4'>Z-Sharp</div>
           <a href="/privacy" className='font-light mx-2'>Privacy</a>
           <a href="/terms" className='font-light mx-2'>Terms</a>

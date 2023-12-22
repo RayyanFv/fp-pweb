@@ -6,13 +6,15 @@ import Technologies from './app/technologies/Main'
 import AboutUs from './app/about-us/Main'
 import Purchase from './app/purchase/Main'
 import Footer from './components/Footer'
+import Signin from './app/signin/Main'
+import Signup from './app/signup/Main'
 
 
 export default function App() {
   return (
     <main className='w-full h-screen '>
       <Header />
-      <Purchase/>
+      <Signup/>
       <Footer/>
     </main>
   );
