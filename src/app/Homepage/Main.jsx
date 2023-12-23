@@ -1,5 +1,5 @@
 import React from 'react';
-import Anu from './Anu';
+
 
 function Main() {
   return (
@@ -84,4 +84,4 @@ function Main() {
   );
 }
 
-export default Main
+export default Homepage
