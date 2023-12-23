@@ -5,12 +5,14 @@ import Homepage from './app/homepage/Main';
 import Tech from './app/technologies/Main';
 import Purchase from './app/purchase/Main';
 import AboutUs from './app/about-us/Main';
+import Signup from './app/signup/Main';
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      <Route path="/login" element={<Signin />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/signup" element={<Signup />} />
       <Route path="/technologies" element={<Tech />} />
       <Route path="/purchase" element={<Purchase />} />
       <Route path="/about-us" element={<AboutUs />} />
