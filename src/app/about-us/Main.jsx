@@ -1,4 +1,4 @@
-function Main() {
+function AboutUs() {
     return (
         <>
   <div className='relative h-[60vh] overflow-hidden'>

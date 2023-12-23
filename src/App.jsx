@@ -7,11 +7,11 @@ import AppRoutes from './routes';
 
 const App = () => {
   return (
-    <>
+    <Router>
       <Header />
       <AppRoutes />
       <Footer />
-    </>
+    </Router>
   );
 }
 

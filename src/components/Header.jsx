@@ -12,11 +12,7 @@ function Header() {
           <a href="/purchase" className="text-white">Purchase</a>
           <a href="/about-us" className="text-white">About</a>
           <div className="space-x-4 ml-auto mr-7 rounded-full bg-white py-2 px-4">
-<<<<<<< HEAD
           <a href="/login" className="text-black font-bold">Sign In</a>
-=======
-          <a href="/signin" className="text-black font-bold">Sign In</a>
->>>>>>> 36eb34fe9687f867bdc8e193defdb56b939082b5
           </div>
         </div>
       </div>

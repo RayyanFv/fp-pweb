@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Main() {
+function Signup() {
   return (
     <>
     <div className='relative h-[60vh] overflow-hidden'>

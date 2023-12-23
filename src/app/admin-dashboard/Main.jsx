@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Main() {
+function AdminDash() {
   return (
     <>
     <div className='flex flex-row w-full h-44 bg-navbar'>
@@ -66,4 +66,4 @@ function Main() {
   )
 }
 
-export default Main
+export default AdminDash
