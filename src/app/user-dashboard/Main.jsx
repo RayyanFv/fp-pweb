@@ -1,69 +1,103 @@
-import React from 'react'
+import { useState, useEffect } from 'react';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { getFirestore, onSnapshot, collection, addDoc, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import { auth, app } from '../../../firebase';
 
-function Main() {
+const db = getFirestore(app);
+
+function App() {
+  const [user, setUser] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+
+  useEffect(() => {
+    const q = query(collection(db, 'messages'), orderBy('timestamp'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setMessages(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
+  const sendMessage = async () => {
+    await addDoc(collection(db, 'messages'), {
+      uid: user.uid,
+      photoURL: user.photoURL,
+      displayName: user.displayName,
+      text: newMessage,
+      timestamp: serverTimestamp(),
+    });
+
+    setNewMessage('');
+  };
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <>
-    <div className='flex flex-row w-full h-44 bg-navbar'>
-        <div className='flex flex-col w-1/5 h-full py-8 gap-1 border-r'>
-            <div className='text-3xl font-bold text-center mt-10`'>Z-Sharp</div>
-            <div className='text-2xl font-bold text-center mt-10`'>User Dashboard</div>
-            <div className='text-md font-normal text-center mt-10`'>Business Assistant</div>
-        </div>
-        <div className='flex flex-col ml-auto my-auto gap-5 px-5'>
-        
-        <div className='rounded-full w-16 h-16 mx-auto '>
-        <img src='/images/technologies/matchaiai.png' className='h-fit w-fit' />
-        </div>
-        <div className='my-auto mx-auto'>Matchaiai</div>
-        
-        </div>
-    </div>
+    <div className="flex w-auto h-full">
+      <div className="flex w-1/5 h-full border-r bg-navbar"></div>
+      <div className="flex flex-col w-4/5 h-full mx-auto gap-3 py-10">
+        <div className="font-bold mx-auto">Chat</div>
 
-    
+        <div className="flex flex-col gap-2">
+  {messages.map((msg) => (
+    <div key={msg.id} className={`flex flex-row mx-auto w-1/2 gap-2 ${msg.data.uid === user?.uid ? 'justify-end' : 'justify-start'}`}>
+      <div className={`rounded-full w-16 h-16 overflow-hidden ${msg.data.uid !== user?.uid ? 'order-first' : 'order-last'}`}>
+        <img src={msg.data.photoURL} className="h-full w-full object-cover" alt="Profile" />
+      </div>
+      <div className={`border rounded-md w-full py-2 px-2 ${msg.data.uid === user?.uid ? 'bg-gray-700 text-white' : 'bg-gray-900'}`}>
+        <div className="text-sm text-white font-bold mb-1">{msg.data.displayName}</div>
+        {msg.data.text}
+      </div>
+    </div>
+  ))}
+</div>
 
-    <div className='flex w-auto h-full'>
-    
-    <div className='flex w-1/5 h-full border-r bg-navbar'></div>
-    <div className='flex flex-col w-4/5 h-full mx-auto gap-3 py-10'>
-        <div className='font-bold mx-auto'>chat</div>
-    <div className='flex flex-row mx-auto w-1/2 h-18 gap-2 mr-auto py-2'>
-    <div className='rounded-full w-16 h-16'>
-        <img src='/images/technologies/matchaiai.png' className='h-fit w-fit' />
+        {/* Message Input */}
+        <div className="flex flex-row mx-auto w-1/2 gap-2">
+          <div className="flex flex-col my-auto w-full">
+            <input
+              className="border border-white py-3 px-4 w-full rounded-xl"
+              placeholder="Enter Your Message"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              name="send"
+              type="text"
+              required
+            />
+          </div>
+          <button
+            className="flex bg-[#1C1C1C] border flex-col h-12 my-auto w-1/8 rounded-xl drop-shadow-xl px-7 ml-auto"
+            onClick={sendMessage}
+          >
+            <div className="mx-auto my-auto font-semibold text-white">Send</div>
+          </button>
         </div>
-        <div className='border rounded-md w-full py-2 px-2'>
-            wow thats amazing
+      </div>
     </div>
-    </div><div className='flex flex-row mx-auto w-1/2 h-18 gap-2 mr-auto py-2'>
-        <div className='border rounded-md w-full py-2 px-2'>
-            Iyalah
-    </div>
-    <div className='rounded-full w-16 h-16'>
-        <img src='/images/technologies/matchaiai.png' className='h-fit w-fit' />
-        </div>
-    </div>
-    
-        
-    <div className='flex flex-row mx-auto w-1/2 h-16 gap-2'>
-    <div className='flex flex-col my-auto w-full'>
-    <input
-            className="border border-white py-3 px-4 w-full rounded-xl"
-            placeholder="Enter Your Message"
-            name="send"
-            type="text"
-            required/>
-    </div>
-    <button className='flex bg-[#1C1C1C] border flex-col h-12 my-auto w-1/8 rounded-xl drop-shadow-xl px-7 ml-auto' >
-          <div className="mx-auto my-auto font-semibold">Send</div>
-    </button>
-    </div>
-    
-    </div>
-    
-    </div>
-    </>
-    
-    
-  )
+  );
 }
 
-export default Main
+export default App;

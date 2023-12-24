@@ -1,4 +1,19 @@
+import { useState } from 'react';
+
+
+
 function Purchase() {
+
+  const [showImage, setShowImage] = useState(false);
+
+  const handlePurchase = () => {
+    // Lakukan logika pembelian atau panggil fungsi untuk melakukan pembelian di sini
+
+    // Setelah pembelian berhasil, tampilkan gambar
+    setShowImage(true);
+  };
+
+
     return (
       <>
   <div className='relative h-[60vh] overflow-hidden'>
@@ -30,9 +45,19 @@ function Purchase() {
    <div className="text-justify font-bold mt-10">Total</div>
    <div className="text-justify font-bold mt-10 ml-auto">Rp. 80.000</div>
    </div>
-   <button className='flex bg-[#1C1C1C] border flex-col h-16 w-64 mx-auto rounded-xl drop-shadow-xl px-7 my-10' >
+   <button
+        className='flex bg-[#1C1C1C] border flex-col h-16 w-64 mx-auto rounded-xl drop-shadow-xl px-7 my-10'
+        onClick={handlePurchase}
+      >
         <div className="mx-auto my-auto font-semibold">Purchase Now</div>
-    </button> 
+      </button>
+
+      {/* Tampilkan gambar jika showImage true */}
+      {showImage && (
+        <div className="mx-auto my-5">
+          <img src="/images/purchase/qris.jpeg" alt="Purchased Image" className="rounded-lg" />
+        </div>
+      )}
    </div>
    
       </>
