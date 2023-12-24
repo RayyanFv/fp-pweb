@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
-import { getAuth, listUsers } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
+import Sidebar from '../../components/Sidebar';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDHZOmC3wqbu6oTllK2QOCUyLo4V2kX0vk",
@@ -42,7 +43,7 @@ function AdminDash() {
   
       const fetchUserAccounts = async () => {
         try {
-          const userRecords = await listUsers(auth);
+          const userRecords = await getAuth.listUsers(auth);
           const userData = userRecords.map((userRecord) => ({
             uid: userRecord.uid,
             email: userRecord.email,

@@ -10,7 +10,7 @@ function Footer() {
 
   return (
     <>
-      <div className='Footer mt-4 mb-10 mx-44'>
+      <div id='footer' className='Footer mt-4 mb-10 mx-44'>
         <div className='Footer1 flex flex-row mb-2'>
           <div className='font-bold mr-4'>Follow Us</div>
           <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className='font-bold mx-2'>
