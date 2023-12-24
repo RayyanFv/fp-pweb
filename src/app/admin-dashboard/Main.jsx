@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { getAuth, listUsers } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDHZOmC3wqbu6oTllK2QOCUyLo4V2kX0vk",
@@ -12,33 +13,58 @@ const firebaseConfig = {
     measurementId: "G-JRC0PPJ161"
   };
   
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth
 
 function AdminDash() {
-  const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const getPostsFromFirebase = [];
-    const unsubscribe = onSnapshot(collection(db, 'messages'), (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        getPostsFromFirebase.push({
-          ...doc.data(),
-          key: doc.id,
+    const [loading, setLoading] = useState(true);
+    const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState([]);
+  
+    useEffect(() => {
+      const fetchMessages = () => {
+        const getPostsFromFirebase = [];
+        const unsubscribe = onSnapshot(collection(db, 'messages'), (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            getPostsFromFirebase.push({
+              ...doc.data(),
+              key: doc.id,
+            });
+          });
+          setPosts(getPostsFromFirebase);
+          setLoading(false);
         });
-      });
-      setPosts(getPostsFromFirebase);
-      setLoading(false);
-    });
-
-    // Cleanup function
-    return () => unsubscribe();
-  }, [db, loading]);
-
-console.log(posts)
-
+  
+        // Cleanup function
+        return () => unsubscribe();
+      };
+  
+      const fetchUserAccounts = async () => {
+        try {
+          const userRecords = await listUsers(auth);
+          const userData = userRecords.map((userRecord) => ({
+            uid: userRecord.uid,
+            email: userRecord.email,
+            displayName: userRecord.displayName,
+            // Add other user properties as needed
+          }));
+  
+          setUsers(userData);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching user accounts:', error);
+          setLoading(false);
+        }
+      };
+  
+      // Fetch both messages and user accounts
+      fetchMessages();
+      fetchUserAccounts();
+    }, [db, auth, loading]);
+  
+    console.log(posts);
+    console.log(users);
 
 
   return (
