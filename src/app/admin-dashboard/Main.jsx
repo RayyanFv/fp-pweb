@@ -21,10 +21,10 @@ function AdminDash() {
 
     
 
-    <div className='flex w-auto h-full'>
+    <div className='flex border h-screen w-auto'>
+        <div className='flex'>content admin dashboard</div>
     
-    <div className='flex w-1/5 h-full border-r bg-navbar'></div>
-    <div className='flex flex-col w-4/5 h-full mx-auto gap-3 py-10'>
+    {/* <div className='flex flex-col w-4/5 h-full mx-auto gap-3 py-10'>
         <div className='font-bold mx-auto'>chat</div>
     <div className='flex flex-row mx-auto w-1/2 h-18 gap-2 mr-auto py-2'>
     <div className='rounded-full w-16 h-16'>
@@ -57,7 +57,7 @@ function AdminDash() {
     </button>
     </div>
     
-    </div>
+    </div> */}
     
     </div>
     </>

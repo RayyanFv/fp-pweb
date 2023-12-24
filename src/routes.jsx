@@ -7,6 +7,7 @@ import Purchase from './app/purchase/Main';
 import AboutUs from './app/about-us/Main';
 import Signup from './app/signup/Main';
 import UserDashboard from './app/user-dashboard/Main'
+import AdminDashboard from './app/admin-dashboard/Main'
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
       <Route path="/purchase" element={<Purchase />} />
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/user-dashboard" element={<UserDashboard />} />
+      <Route path="/admin-dashboard" element={<AdminDashboard />} />
     </Routes>
   );
 }
