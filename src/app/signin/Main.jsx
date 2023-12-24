@@ -26,6 +26,7 @@ function Signin() {
           // Setelah menampilkan pesan sukses, kosongkan pesan setelah 3 detik (3000 milidetik)
           const timeoutId = setTimeout(() => {
             setSuccessMessage(null);
+            window.location.href='/'
           }, 3000);
 
           return () => clearTimeout(timeoutId); // Membersihkan timeout saat komponen di-unmount

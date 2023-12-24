@@ -1,6 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDHZOmC3wqbu6oTllK2QOCUyLo4V2kX0vk",
+    authDomain: "mychatapp-81ceb.firebaseapp.com",
+    projectId: "mychatapp-81ceb",
+    storageBucket: "mychatapp-81ceb.appspot.com",
+    messagingSenderId: "186103250800",
+    appId: "1:186103250800:web:1d3d4a377f81df0b7619b5",
+    measurementId: "G-JRC0PPJ161"
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 function AdminDash() {
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getPostsFromFirebase = [];
+    const unsubscribe = onSnapshot(collection(db, 'messages'), (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        getPostsFromFirebase.push({
+          ...doc.data(),
+          key: doc.id,
+        });
+      });
+      setPosts(getPostsFromFirebase);
+      setLoading(false);
+    });
+
+    // Cleanup function
+    return () => unsubscribe();
+  }, [db, loading]);
+
+console.log(posts)
+
+
+
   return (
     <>
     <div className='flex flex-row w-full h-44 bg-navbar'>
