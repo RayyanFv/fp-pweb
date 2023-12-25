@@ -48,7 +48,7 @@ function Signup() {
         <div className='flex flex-col gap-2'>
           <div className='text-xl font-medium my-auto'>Email</div>
           <input
-            className="border border-white py-3 px-4 w-full mb-2 rounded-xl"
+            className="border border-white py-3 px-4 w-full mb-2 rounded-xl text-black"
             placeholder="Insert your Email"
             name="email"
             type="text"
@@ -60,7 +60,7 @@ function Signup() {
         <div className='flex flex-col gap-2 my-7'>
           <div className='text-xl font-medium my-auto'>Password</div>
           <input
-            className="border border-white py-3 px-4 w-full mb-2 rounded-xl"
+            className="border border-white py-3 px-4 w-full mb-2 rounded-xl text-black"
             placeholder="Insert your Password"
             name="password"
             type="password"
@@ -72,7 +72,7 @@ function Signup() {
         <div className='flex flex-col gap-2'>
           <div className='text-xl font-medium my-auto'>Repeat Password</div>
           <input
-            className="border border-white py-3 px-4 w-full mb-2 rounded-xl"
+            className="border border-white py-3 px-4 w-full mb-2 rounded-xl text-black"
             placeholder="Insert your Password Again"
             name="repeatPassword"
             type="password"
@@ -86,7 +86,7 @@ function Signup() {
         {successMessage && <div className="text-green-500">{successMessage}</div>}
 
         <a href='/signin' className="text-sm" htmlFor="rememberMe">
-          Sign Up here
+          Sign In here
         </a>
         <div className="flex items-end justify-end">
           <button

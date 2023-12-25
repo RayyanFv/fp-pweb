@@ -11,7 +11,11 @@ export default function Dropdown() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLogin(true);
-        setUser(user.displayName);
+        if(user.displayName != null){
+          setUser(user.displayName);
+        } else{
+          setUser(user.email);
+        }
       } else {
         setIsLogin(false);
       }
